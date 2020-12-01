@@ -1,6 +1,12 @@
 # Sample for AWS Support
 
-Modify config.tf per your account.
+## Case ID 7672914591
+
+> This sets up the entire infrastructure for the problem example, with the exception of the ECS Cluster.  While we setup the basic infrastructure using terraform, Terraform is not required for this problem to occur.  Feel free to replicate the setup in cloudformation.
+
+- Modify config.tf per your account.
+
+> **Note**: ecs.tf.off is not going to be executed.  it's included to show the problem via terraform if so desired.
 
 After the basic infrastructure is in place, the following samples show the problem.
 
