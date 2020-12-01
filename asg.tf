@@ -12,7 +12,7 @@ data "template_file" "user_data" {
 
 resource "aws_launch_configuration" "lc" {
   image_id             = data.aws_ami.ecs_ami.id
-  name_prefix          = local.name
+  name_prefix          = "${local.name}-"
   instance_type        = local.instance_type
   iam_instance_profile = aws_iam_instance_profile.ecsInstanceProfile.id
   security_groups      = [aws_security_group.default.id]

@@ -82,13 +82,13 @@ EOF
 }
 
 resource "aws_iam_role" "ecsInstanceRole" {
-  name                  = "ecsInstanceRole-${local.random_code}"
+  name                  = "${local.name}-ecs-instance"
   assume_role_policy    = local.ecsInstanceRoleAssumeRolePolicy
   force_detach_policies = true
 }
 
 resource "aws_iam_role_policy" "ecsInstanceRolePolicy" {
-  name   = "ecsInstanceRolePolicy-${local.random_code}"
+  name   = "${local.name}-ecs-instance"
   role   = aws_iam_role.ecsInstanceRole.id
   policy = local.ecsInstancerolePolicy
 }
@@ -99,17 +99,17 @@ resource "aws_iam_role_policy_attachment" "container_service_role_attachment_ssm
 }
 
 resource "aws_iam_role" "ecsServiceRole" {
-  name               = "ecsServiceRole-${local.random_code}"
+  name               = "${local.name}-ecs-service"
   assume_role_policy = local.ecsServiceRoleAssumeRolePolicy
 }
 
 resource "aws_iam_role_policy" "ecsServiceRolePolicy" {
-  name   = "ecsServiceRolePolicy-${local.random_code}"
+  name   = "${local.name}-ecs-service"
   role   = aws_iam_role.ecsServiceRole.id
   policy = local.ecsServiceRolePolicy
 }
 
 resource "aws_iam_instance_profile" "ecsInstanceProfile" {
-  name = "ecsInstanceProfile-${local.random_code}"
+  name = "${local.name}-ecs-instance"
   role = aws_iam_role.ecsInstanceRole.name
 }
