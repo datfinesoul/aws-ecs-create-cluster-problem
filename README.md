@@ -238,10 +238,22 @@ aws --region us-east-1 ecs put-cluster-capacity-providers \
 
 ## Creating a Capacity Provider using the CLI
 
+### Version that worked
+
 ```bash
 aws ecs create-capacity-provider --name SAMPLE \
  --region us-east-1 \
  --auto-scaling-group-provider \
  autoScalingGroupArn=arn:aws:autoscaling:us-east-1:988857891049:autoScalingGroup:815fdeff-316b-49b7-9bbc-a82535530fe0:autoScalingGroupName/SAMPLE 
+```
+
+### When using the managedScaling settings, it fails
+
+```bash
+SAMPLE_ARN="arn:aws:autoscaling:us-east-1:988857891049:autoScalingGroup:815fdeff-316b-49b7-9bbc-a82535530fe0:autoScalingGroupName/SAMPLE"
+aws ecs create-capacity-provider --name SAMPLE \
+ --region us-east-1 \
+ --auto-scaling-group-provider \
+ "autoScalingGroupArn=${SAMPLE_ARN},managedScaling={status='ENABLED',targetCapacity=100},managedTerminationProtection='ENABLED'"
 ```
 
