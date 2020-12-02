@@ -1,5 +1,5 @@
 resource "aws_security_group" "default" {
-  vpc_id = local.vpc_id
+  vpc_id = data.aws_vpc.primary.id
 
   ingress {
     from_port   = 0

@@ -26,7 +26,7 @@ resource "aws_launch_configuration" "lc" {
 
 resource "aws_autoscaling_group" "asg" {
   name                      = local.name
-  vpc_zone_identifier       = [aws_subnet.public_subnet.id]
+  vpc_zone_identifier       = [aws_subnet.public.id]
   min_size                  = 0
   max_size                  = 64
   health_check_type         = "EC2"
