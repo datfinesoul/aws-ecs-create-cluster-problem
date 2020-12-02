@@ -34,10 +34,6 @@ data "aws_vpc" "primary" {
   }
 }
 
-output "aws_vpc_id" {
-  value = data.aws_vpc.primary.id
-}
-
 data "aws_internet_gateway" "primary" {
   filter {
     name = "attachment.vpc-id"
@@ -45,4 +41,19 @@ data "aws_internet_gateway" "primary" {
       data.aws_vpc.primary.id
     ]
   }
+}
+
+locals {
+  vpc_cidr    = data.aws_vpc.primary.cidr_block_associations[0].cidr_block
+  subnet_cidr = cidrsubnet(data.aws_vpc.primary.cidr_block_associations[0].cidr_block, 9, 127)
+}
+
+output "aws_vpc_id" {
+  value = data.aws_vpc.primary.id
+}
+output "aws_vpc_cidr" {
+  value = local.vpc_cidr
+}
+output "aws_subnet_cidr" {
+  value = local.subnet_cidr
 }

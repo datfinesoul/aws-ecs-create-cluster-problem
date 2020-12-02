@@ -115,3 +115,7 @@ resource "aws_cloudwatch_metric_alarm" "scaleDown" {
     ClusterName = local.name
   }
 }
+
+output "aws_asg_arn" {
+  value = aws_autoscaling_group.asg.arn
+}
