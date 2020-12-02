@@ -236,3 +236,12 @@ aws --region us-east-1 ecs put-cluster-capacity-providers \
 }
  ```
 
+## Creating a Capacity Provider using the CLI
+
+```bash
+aws ecs create-capacity-provider --name SAMPLE \
+ --region us-east-1 \
+ --auto-scaling-group-provider \
+ autoScalingGroupArn=arn:aws:autoscaling:us-east-1:988857891049:autoScalingGroup:815fdeff-316b-49b7-9bbc-a82535530fe0:autoScalingGroupName/SAMPLE 
+```
+
