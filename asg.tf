@@ -62,60 +62,6 @@ resource "aws_autoscaling_group" "asg" {
   }
 }
 
-resource "aws_autoscaling_policy" "up" {
-  name                   = "${local.name}-scaleUp"
-  scaling_adjustment     = 2
-  adjustment_type        = "ChangeInCapacity"
-  cooldown               = 60
-  policy_type            = "SimpleScaling"
-  autoscaling_group_name = aws_autoscaling_group.asg.name
-}
-
-resource "aws_autoscaling_policy" "down" {
-  name                   = "${local.name}-scaleDown"
-  scaling_adjustment     = -1
-  adjustment_type        = "ChangeInCapacity"
-  cooldown               = 60
-  policy_type            = "SimpleScaling"
-  autoscaling_group_name = aws_autoscaling_group.asg.name
-}
-
-resource "aws_cloudwatch_metric_alarm" "scaleUp" {
-  alarm_name          = "${local.name}-scaleUp"
-  alarm_description   = "ECS cluster scaling metric above threshold"
-  comparison_operator = "GreaterThanOrEqualToThreshold"
-  evaluation_periods  = 1
-  metric_name         = "CPUUtilization"
-  namespace           = "AWS/ECS"
-  statistic           = "Average"
-  period              = 60
-  threshold           = 80
-  actions_enabled     = true
-  alarm_actions       = [aws_autoscaling_policy.up.arn]
-
-  dimensions = {
-    ClusterName = local.name
-  }
-}
-
-resource "aws_cloudwatch_metric_alarm" "scaleDown" {
-  alarm_name          = "${local.name}-scaleDown"
-  alarm_description   = "ECS cluster scaling metric under threshold"
-  comparison_operator = "LessThanThreshold"
-  evaluation_periods  = 1
-  metric_name         = "CPUUtilization"
-  namespace           = "AWS/ECS"
-  statistic           = "Average"
-  period              = 60
-  threshold           = 80
-  actions_enabled     = true
-  alarm_actions       = [aws_autoscaling_policy.down.arn]
-
-  dimensions = {
-    ClusterName = local.name
-  }
-}
-
 output "aws_asg_arn" {
   value = aws_autoscaling_group.asg.arn
 }
